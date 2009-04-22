@@ -1,0 +1,191 @@
+<head>
+<title>Getting Started with phoneME Feature Software (MR2)</title>
+<style type="text/css">
+<!--
+.style3 {color: #e76f00}
+-->
+</style>
+</head>
+ 
+<body>
+
+<!--  ===============    BEGIN PAGE BODY (Ignore Everything Above)  ============= -->
+
+<!--BEGIN PAGE TITLE -->
+<div id="projecthome" class="app"> <h1><font color="#e76f00"> Getting Started with phoneME Feature Software (MR2) <span class="style1"> </span></font></h1>
+<!--END PAGE TITLE -->
+
+<p>
+<a href="./download_feature.html">next</a> | <a href="./client_feature.html">last</a> 
+<p>
+
+This guide contains the following sections:
+<p>
+<ul>
+<li><A HREF="download_feature.html">Downloading phoneME Feature Software Source Code</A>
+<li><A HREF="begin_feature.html">Before You Begin</A>
+<li><A HREF="buildenv_feature.html">Setting Up Your Build Environment</A>
+<li><A HREF="javacall_feature.html">Building the JavaCall Porting Layer</A>
+<li><A HREF="pcsl_feature.html">Building a PCSL Reference Port</A>
+<li><A HREF="cldc_feature.html">Building a CLDC Reference Port</A>
+<li><A HREF="client_feature.html">Building a phoneME Feature Software Reference Port</A>
+<!-- <li><A HREF="options_feature.html">Default Build Configuration Options</A> -->
+</ul>
+<p>
+
+
+<!-- BEGIN SECTION HEAD -->
+<hr noshade="noshade" size="1">
+<a name="intro"></a><h3>Introduction</h3>
+<!-- END SECTION HEAD -->
+<p>
+
+This guide contains information for building and running the phoneME&#153; Feature software, 
+an optimized Java&#153; 2 Platform, Micro Edition (J2ME&#153;) stack based on Milestone Release 2 (MR2) of the phoneME Feature 
+software project. 
+<p>
+This guide allows you to take the following general steps:
+<p>
+<UL>
+<LI>Set up and configure the build environment for your build platforms</LI> 
+<LI>Build a default version of the JavaCall&#153; porting layer (for Win32 on i386 only), 
+PCSL libraries, CLDC, and phoneME Feature software binaries.</LI>
+<LI>Run the phoneME Feature software on your default platform.</LI>
+<LI>Find additional information about phoneME Feature software.</LI>
+</UL>
+<p>
+<b>NOTE:</b> This document is part of the MR2 release of phoneME Feature software. The contents
+are subject to change at any time, based on community input and ongoing development. 
+<!-- For a stable, unchanging version (except for bug fixes), 
+see the <a href="https://phoneme.dev.java.net/content/phoneme_feature_r1.html"> MR1 release</a>
+of the phoneME Feature project.  -->
+<p>
+
+
+<!-- _______ The Following Sections Transferred In from Before You Begin _____ -->       
+
+<!-- BEGIN SECTION HEAD -->
+<hr noshade="noshade" size="1">
+<a name="intro"></a><h3>Build Requirements</h3>
+<!-- END SECTION HEAD -->
+<p>
+
+When building the phoneME Feature software, the machine where you setup your build
+environment and carry out the build instructions is called your <i>build platform</i>.
+The build platform is the machine where source code is installed, the compilers are run,
+and executable code is built. This executable code is then installed and run on a
+<i>target platform</i>.
+<P>
+The phoneME Feature software supports the following build platforms:
+<P>
+<UL>
+<LI><a href="#linux_req">Linux on i386</LI></a>
+<LI><a href="#win_req">Win32 on i386</LI></a>
+<P>
+</UL>
+<P>
+The phoneME Feature software supports the following target platforms:
+<P>
+<UL>
+<LI>Linux on ARM (Texas Instruments P2SAMPLE64-V6 board)</LI>
+<LI>Linux on i386 (emulation mode only)</LI>
+<LI>JavaCall API on i386 (emulation mode only)</LI>
+</UL>
+<P>
+
+<!-- BEGIN SECTION HEAD -->
+<hr noshade="noshade" size="1">
+<a name="linux_req"></a><strong>Requirements for Building on a Linux on i386 Platform</strong>
+<!-- END SECTION HEAD -->
+
+<p>
+To properly build both Linux on i386 and Linux on ARM target platforms, a Linux on i386 build 
+platform must meet the following requirements:
+<P>
+<UL>
+<LI>Ubuntu Linux version 6.06 
+<LI>Java 2 Platform, Standard Edition (J2SE&#153;) Development Kit (JDK&#153;) version 1.4.2</LI>
+<LI>GNU Make version 3.79.1 or later</LI>
+<LI>GNU Cross Compiler (GCC) 3.4.6 or later</LI>
+<!-- <LI>Trolltech Qt/Embedded 2.3.10</LI> -->
+</ul>
+<p>
+For the Linux on ARM target platform, the following software is also required:
+n
+<p>
+<ul>
+<li>MontaVista Linux Consumer Electronics Edition 3.1
+</ul>
+<p>
+The following software is optional:
+<p>
+<ul>
+<LI>Doxygen version 1.4.1 (used to build PCSL API documentation)
+<!-- <LI>Development Kit for the Java Card&#153; Platform 2.2.1 (used to build JSR 177 only) -->
+</UL>
+<p>
+For more information on acquiring and installing Linux on i386 build platform tools, see 
+<a href="./buildenv_feature.html#linux_setup"> Setting Up the Linux on i386 Build 
+Environment</a>.
+<p>
+
+<!-- BEGIN SECTION HEAD -->
+<hr noshade="noshade" size="1">
+<a name="win_req"></a><strong>Requirements for Building on a Win32 on i386 Platform</strong>
+<!-- END SECTION HEAD -->
+<p>
+
+A Win32 on i386 target platform must meet the following requirements:
+<p>
+<ul>
+<li>Windows 2000 or Windows XP
+<li>JDK version 1.4.2
+<li>Microsoft Visual C++ (MSVC++) Professional Version 6.0 (with Microsoft Processor Pack 5, 
+version 6.15 or later, and an up-to-date Service Pack) or Visual Studio .NET 2003 
+<!-- <li>Microsoft Processor Pack 5, version 6.15 or later -->
+<li>Cyg4Me version 1.1 (a version of Cygwin for building Java ME technology.  Cyg4Me contains 
+GNU Make 3.79.1.)
+</ul>
+<p>
+The following software is optional:
+<p>
+<ul>
+<li>Doxygen version 1.4.1 (used to build PCSL API documentation)
+<!-- <li>Development Kit for the Java Card Platform 2.2.1 (used to build JSR 177 only) -->
+</ul>
+<p>
+For more information on acquiring and installing Win32 on i386 build platform tools, see 
+<a href="./buildenv_feature.html#win_setup"> Setting Up the Win32 on i386 Build 
+Environment</a>.
+
+
+<!-- BEGIN SECTION HEAD -->
+<hr noshade="noshade" size="1">
+<a name="docs"></a><h3>Commercial Documentation</h3>
+<!-- END SECTION HEAD  -->
+<p>
+
+This guide provides only the minimal information needed to set up, build, and run the
+phoneME Feature software quickly, using only default settings for each implementation.
+<p>
+For additional information on any topic presented in this document, see the
+<a href="http://java.sun.com/javame/reference/docs/sjwc-2.0-web/docs/BuildGuide-html/index.html">
+<i>Sun Java Wireless Client Build Guide</i></a>. 
+<p>
+For more information about other phoneME Feature software topics, including porting, 
+multitasking, using Adaptive User Interface Technology, and others, see the 
+<a href="http://java.sun.com/javame/reference/docs/sjwc-2.0-web/index.html">
+ commercial documentation set</a>.
+<pre>
+
+
+</pre>
+
+
+<a href="./download_feature.html">next</a> | <a href="./client_feature.html">last</a> 
+<p>
+
+
+<!-- =============================== END PAGE BODY ================================= --> 
+
+</div>
