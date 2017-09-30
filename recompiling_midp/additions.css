@@ -1,0 +1,610 @@
+/* adjustments to existing styles */
+/***************************************************************/ 
+
+/* hover for accordion */
+.vAccordion .hover {
+  background:#1590eb !important;
+}
+
+/* project logo adjustment */
+.projectLogo img {border:0px;}
+
+#masthead #logo {
+  cursor:pointer;
+}
+
+/* this is the search box */
+#masthead .controls input {padding:0px;}
+
+/* adding a little padding for the poups */
+.contextMenuBody {
+  padding:6px 0px;
+}
+
+:focus{-moz-outline-style: none;}
+
+a.personImage {
+  display:block;
+  margin:2px;
+  float:left;
+}
+
+a.personImage:hover {
+  border:0px;
+} 
+
+a.personImage img {
+  border:0px;
+}
+
+/* used in the _wiki_controls sidebar .. button needs to be a different size*/
+.vAccGoButton {
+	background-image:url(/images/go.png?@rev@);
+	width:40px;
+	height:30px;
+	margin-bottom:3px;
+}
+
+/* needed this because larger avatars broke the people table */
+.blockList .people.info {
+  width:580px;
+}
+
+/* message previews were too small ... this is a quicik fix */
+td.postMessage p { font-size:12px;}
+
+/* Some adjustments to the way we're positioning shadows*/
+#contextMenuShadow{
+  position:absolute;
+  z-index:199;
+}
+.popupMenuContainer {
+  z-index:200;
+}
+
+img.contextMenuAnchor {
+  vertical-align:bottom;
+}
+
+.content .home div.steps {margin-left:105px}
+
+/***************************************************************/
+/* new styles */
+/***************************************************************/
+
+/* General-purpose de-emphasis on white background */
+.quiet {
+  color:#666;
+  font-weight:normal; 
+}
+
+/* a common style for definition lists: bold labels and reasonable widths */
+dl.standard dt {font-weight:bold; width:80px;}
+
+/* style for definition lists with longer terms */
+dl.extended-terms dt {
+  font-weight: bold;
+  width: 120px;
+}
+
+/* used on every page instead of inline styles */
+.contentPadding {
+  margin:10px 20px 20px 20px;
+}
+
+/* used to mark unique/non-unique project names */
+.unique, .unique_below{
+  background: url(/images/okIcon_small.png?@rev@) no-repeat;
+}
+.duplicate, .duplicate_below{
+  background: url(/images/errorIcon_small.png?@rev@) no-repeat;
+}
+.loading {
+  background: url(/images/file_icons/spinner.gif?@rev@) no-repeat;
+}
+.unique, .duplicate, .loading {
+  padding:2px 0 2px 24px;
+  font-weight:bold;
+}
+.duplicate_below, .unique_below{
+  padding:2px 0 2px 24px;
+  font-weight:bold;
+  display:block;
+}
+  
+/*the forum / projct lists on the home page */
+.homePageList {border-bottom:0px;}
+.homePageList li {margin:0px; padding: 8px 0 8px 0; border-bottom:1px solid #ddd;}
+.homePageList .listImage {float:left;margin:2px}
+.homePageList div.listContent {float:left;padding-left:5px;width:285px;}
+.homePageList a.titleLink {font-size:1.3em; display:block;margin-bottom:3px;}
+
+/* the mailing list style page */
+.mailing-list {padding-bottom:10px;}
+.mailing-list .subject {margin-top:6px;}
+.mailing-list .email {font-size:1.3em;}
+
+/* search term hit highlighting */
+.searchResults em {background:#EDCC52}
+
+/* tree column for source browsing */ 
+ul.jqueryFileTree li .name-col {float:left;width:200px;overflow:hidden;}
+ul.jqueryFileTree li .rev-col {float:right;width:50px;overflow:hidden;}
+ul.jqueryFileTree li .mod-col {float:right;width:80px;overflow:hidden;}
+ul.jqueryFileTree li .log-col {float:right;width:150px;overflow:hidden;}
+ul.jqueryFileTree li .author-col {float:right;width:80px;overflow:hidden;}
+
+/* an informational box */
+.centeredInfo {
+  width:80%;
+  background:#E3EDF8;
+  border:1px solid #b3bDe8;
+  text-align:center;
+  margin:20px auto 10px auto;
+  padding:15px;
+  font-size:1.3em;
+  line-height:1.5em;
+  font-weight:bold;
+}
+
+/* a general-purpose bullet-list */
+ul.bulletList{
+  list-style-type: disc;
+	list-style-position: inside;
+}
+
+/***************************************************************/
+/* SCM */
+/***************************************************************/
+table.logEntry {
+  width: 100%;
+  border-top:1px solid #ccc;
+}
+
+table.logEntry td {
+  padding:3px;
+}
+
+table.logEntry td.label {
+    font-weight:bold;
+    width: 15%;
+    text-align:left;
+    vertical-align: top;
+    padding-right:8px;
+}
+
+table.odd { background: #f0f0f0; }
+
+/*table.even { }*/
+.plusline { color: green; }
+.minusline { color: red; }
+.atline { color: purple; }
+
+pre.scm {
+  background-color: #eee;
+  overflow: auto;
+  font-size:1.4em;  
+}
+
+/* holds the ajax SCM browsing tree */
+#scmTree {
+  min-height:100px;
+  margin:15px 0 30px 0;
+  padding-bottom:20px;
+  border-bottom:1px solid #ccc;
+}
+
+.scmReadme {
+  margin-top: 2em;
+}
+
+.scmReadme pre {
+  font-size: 1.25em;
+  width: 80%;
+  padding: 1em;
+}
+
+.scmNavBlock pre {
+  font-size: 1.25em;
+}
+
+table.fileListing td {
+  white-space: nowrap;
+}
+
+/***************************************************************/
+/* temporary styles */
+/***************************************************************/
+
+/* popups / callouts */
+img {
+  border:0px;
+}
+#tour_carousel .metadata {
+  font-size:10px; color:#aaa;
+}
+
+
+/***************************************************************/
+/* tag suggest */
+/***************************************************************/
+.tagMatches {
+   margin:10px 10px 10px 0;
+   display:block;
+}
+
+.tagMatches span {
+  color:white;
+  background: #064CA2;
+  padding: 2px 5px;
+  cursor: pointer;
+  margin:5px 5px;
+  margin-bottom:2px;
+}
+
+/***************************************************************/
+/* Admin table */
+/***************************************************************/
+table.admin {
+  width:100%;
+  word-wrap: break-word;
+
+}
+
+/* header */
+table.admin thead tr {
+  background: #f3f3f3 url(/images/adminTableHeaderBG.gif?@rev@) repeat-x;
+  border-top:1px solid #bbb9ba;
+  border-bottom:1px solid #bbb9ba;
+  height:22px;
+}
+table.admin thead th {
+  padding:0 10px;
+}
+
+/***************************************************************/
+/* Inline form table */
+/***************************************************************/
+.ift tr.ift-form-row {background-color:#F7EECB;}
+
+/* dragging a table row */
+.tDnD_whileDrag td {
+  background:yellow;
+}
+
+/***************************************************************/
+/* jquery autocompleteP */
+/***************************************************************/
+.ac_results {
+    padding: 0px;
+    border: 1px solid WindowFrame;
+    background-color: Window;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height:300px;
+   
+}
+
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results iframe {
+    display:none;/*sorry for IE5*/
+    display/**/:block;/*sorry for IE5*/
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
+    filter:mask();
+    width:3000px;
+    height:3000px;
+}
+
+.ac_results li {
+    margin: 0px;
+    padding: 2px 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    font: normal .85em/.85em Verdana, Arial, sans-serif;
+    overflow: hidden;
+}
+
+.ac_results img {
+    margin-right:6px;
+    display:block;
+    float:left;
+    border:1px solid #888;
+}
+
+.ac_loading {
+    background: Window url('/images/activity.gif'?@rev@) right center no-repeat;
+}
+
+.ac_over {
+    background-color: Highlight;
+    color: HighlightText;
+}
+
+/***************************************************************/
+/* jq autocomplete */
+/***************************************************************/
+#live-search {width:180px;}
+
+/* because of an jQuery/IE artifact, this selector only applies to IE */
+#jq-ui-autocomplete-parent > div {
+    position: absolute;
+    clear: left;
+}
+
+.jq-ui-autocomplete {
+    z-index:10010;
+    position: absolute;
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    margin: 0px;
+    list-style: none;
+    font: normal .85em/.85em Verdana, Arial, sans-serif;
+    color: #333;
+    max-height:404px;
+}
+
+.jq-ui-autocomplete li {
+  display: block; 
+  height:34px;
+  padding: 0px 5px 0px 5px; 
+  overflow: hidden;
+  width: 170px;
+}
+
+.jq-ui-autocomplete span.type, .ac_results span.type {
+ color:#888;
+ line-height:18px;
+}
+
+.jq-ui-autocomplete div.ival, .ac_results div.ival {
+  margin-top:5px;
+  display:block;
+  float:left;
+  width:125px;
+  color:black;
+}
+
+.jq-ui-autocomplete img {
+  margin-top:6px;
+  display:block;
+  float:right;
+  border:1px solid #888;
+}
+
+.jq-ui-autocomplete .active {
+  background-color: #B0DAFF;
+}
+
+
+/***************************************************************/
+/* rails -specific validation error styles */
+/***************************************************************/
+.error    {
+  background:       url(/images/error_bg.gif?@rev@) repeat-x;
+  color:            #d40807;
+  font-weight:      bold;
+  margin:           0 0 4px 0;
+  padding:          15px;
+}
+
+.errorExplanation {
+  background: url(/images/error_bg.gif?@rev@) repeat-x #edf2f5;
+  margin: 15px 0 15px 0;
+  min-height: 75px;
+  padding:          5px 20px 15px 20px;
+}
+
+.errorExplanation h2 {
+  color:            #d40807;
+  font-size:16px;
+}
+
+.errorExplanation ul li	{
+  margin:           0 0 0 15px;
+  padding:          0 0 0 5px;
+}
+
+.notice {
+  background:       url(/images/error_bg.gif?@rev@) repeat-x;
+  color:            #555555;
+  font-weight:      bold;
+  margin:           0 0 4px 0;
+  padding:          15px;
+}
+
+.fieldWithErrors input, .fieldWithErrors select, .fieldWithErrors textarea {
+  border: 2px solid #d40807;
+}
+
+/***************************************************************/
+/* this is temporary, during development only */
+/***************************************************************/
+/* not implemented notice*/
+.not-implemented-notice {
+  position:absolute;
+  background:red;
+  padding:2px !important;
+  color:white;
+  font-size:12px;
+  font-family:arial;
+  margin-top:-2px;
+  z-index:1000;
+  font-weight:bold;
+}
+
+/***************************************************************/
+/* jcarousel styles */
+/***************************************************************/
+.jqiwarning .jqi{
+  background-color: blue;
+}
+.jqifade{
+  background-color: #000;
+}
+div.jqi{
+  position: absolute;
+  background-color: #eee;
+  padding: 2px;
+  width: 300px;
+}
+div.jqi .jqiclose{
+  float: right;
+  margin: -35px -10px 0 0;
+  cursor: pointer;
+  display:none;
+}
+div.jqi .jqicontainer{
+  background-color: #1279C6;
+  padding: 5px;
+  color: #fff;
+  font-weight: bold;
+}
+div.jqi .jqimessage{
+  padding: 20px;
+  font-family:arial;
+  font-weight:bold;
+  color: white;
+  text-align:center;
+}
+div.jqi .jqibuttons{
+  text-align: center;
+  padding: 5px 0 0 0;
+}
+div.jqi button{
+  padding: 3px 10px 3px 10px;
+  margin: 0 10px;
+  background:#eee;
+  border: 1px solid #fff;
+} 
+
+/***************************************************************/
+/* jcarousel styles */
+/***************************************************************/
+#carousel_container .next, #carousel_container .prev {
+  float:left;
+  height:99px;
+  background:#fff;
+  font-size:.9em;
+  border:1px solid #eee;
+}
+#carousel_container .next:hover, #carousel_container .prev:hover {
+  border: 1px solid #1279C6;
+  background:#eef;
+}
+#carousel_list {float:left;}
+#carousel_list li {float:left;}
+#carousel_list a {
+  display:block;
+  margin:0 2px 0 2px;
+  border:1px solid #aaa;
+}
+#carousel_list a:hover {
+  border: 1px solid #1279C6;
+}
+#tour_carousel_title {
+  text-align:center; 
+  color:#888;
+  font-size:1.6em;
+  height:24px;
+  margin-top:6px;
+}
+
+
+/***************************************************************/
+/* jqModal*/
+/***************************************************************/
+/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
+	the Window's z-index value will be set to 3000 by default (in jqModal.js). You
+	can change this value by either;
+	  a) supplying one via CSS
+	  b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
+
+/* Common styles for jqModal, which we use for large overlays and stylized confirmation modal dialogs. */
+
+/* the outermost wrapper class for jqModal dialogs*/
+.jqmWindow {
+  font-family:Arial,Helvetica,sans-serif;
+  display:none;
+  position: fixed;
+  left: 50%;
+  background-color: #EFEFEF;
+  color: #333;
+  border: 1px solid #3368AE;
+  text-align:left;
+  padding:4px 12px;
+}
+
+/* Header contains title and a glose button  */
+.jqmWindow .jqmHeader {
+  font-weight:bold;
+  text-align:left;
+  color:black;
+  padding-bottom:2px;
+  border-bottom:1px solid #666;
+  position:relative;
+}
+
+/* The close button in the header is positioned to the far right. */
+.jqmWindow .jqmHeader .jqmClose {
+  position:absolute;
+  top:2px;
+  right:0px;
+  cursor:pointer;
+}
+
+/* jqmTarget contains the actual content to be displayed in the window / dialog */
+.jqmWindow .jqmTarget {padding: 10px 0;}
+
+/* This is the blocking overlay -- change the color here, and the transparency in JS code if you want to */
+.jqmOverlay { background-color: #000; }
+
+/* buttons to close the window / dialoggo in the footer */
+.jqmFooter {
+  text-align:right;
+  margin-top:5px;
+}
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Here are the styles that are specific to the large (potentially scrolling) overlay
+ * NOTE: jqm_large_overlay is the id on the div with a class of .jqmWindow when you're using it as an overlay
+ */
+#jqm_large_overlay{
+  top: 13%;
+  margin-left: -300px;
+  width: 600px;
+}  
+
+/* We also use jQM for modal dialogs. Dialogs are thinner and placed slightly lower, as specified by the styles below  */
+#jqm_dialog {
+  top:20%;
+  margin-left: -125px;
+  width:250px;
+}
+ 
+/* SCM-specific changes */
+
+h2.scmTitle, h3.scmTitle {
+    text-transform: none;
+}
+
+/* highlighting individual forum posts */
+.postOutsideContainer:target .rowColor, .postOutsideContainer:target .altRowColor {
+    background-color:#FFFFF1;
+}
