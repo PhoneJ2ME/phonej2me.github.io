@@ -1,0 +1,263 @@
+diff -Naur ORIGINAL_phoneME/compile.sh GP2X_phoneME/compile.sh
+--- ORIGINAL_phoneME/compile.sh	1970-01-01 01:00:00.000000000 +0100
++++ GP2X_phoneME/compile.sh	2008-03-15 18:19:50.000000000 +0100
+@@ -0,0 +1,22 @@
++#!/bin/bash
++export MEHOME=~/phoneME/phoneme_feature
++mkdir $MEHOME/build_output 
++export BUILD_OUTPUT_DIR=$MEHOME/build_output
++export JDK_DIR=/usr/lib/j2se/1.4
++export PATH=$JDK_DIR/bin:$PATH
++export MONTAVISTA=/gp2xsdk/Tools/arm-gp2x-linux
++export PCSL_OUTPUT_DIR=$BUILD_OUTPUT_DIR/pcsl
++export PCSL_PLATFORM=linux_i386_gcc
++cd $MEHOME/pcsl
++make  NETWORK_MODULE=bsd/generic
++export PCSL_PLATFORM=linux_arm_gcc
++cd $MEHOME/pcsl
++make  NETWORK_MODULE=bsd/generic GNU_TOOLS_DIR=$MONTAVISTA
++export JVMWorkSpace=$MEHOME/cldc
++export JVMBuildSpace=$BUILD_OUTPUT_DIR/cldc
++cd $JVMWorkSpace/build/linux_arm
++make ENABLE_PCSL=true PCSL_OUTPUT_DIR=$BUILD_OUTPUT_DIR/pcsl ENABLE_ISOLATES=true GNU_TOOLS_DIR=$MONTAVISTA
++export MIDP_OUTPUT_DIR=$BUILD_OUTPUT_DIR/midp
++cd $MEHOME/midp/build/linux_fb_gcc
++make PCSL_OUTPUT_DIR=$BUILD_OUTPUT_DIR/pcsl CLDC_DIST_DIR=$BUILD_OUTPUT_DIR/cldc/linux_arm/dist TOOLS_DIR=$MEHOME/tools TARGET_CPU=arm USE_MULTIPLE_ISOLATES=true GNU_TOOLS_DIR=$MONTAVISTA
++
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/configuration/configuration_xml/linux_fb/constants.xml GP2X_phoneME/phoneme_feature/midp/src/configuration/configuration_xml/linux_fb/constants.xml
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/configuration/configuration_xml/linux_fb/constants.xml	2007-05-03 03:00:24.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/configuration/configuration_xml/linux_fb/constants.xml	2008-03-09 16:35:44.000000000 +0100
+@@ -47,19 +47,19 @@
+             Comment="When false, Chameleon will not even attempt to load romized images for the UI."/>
+   <constant Type="int"
+             Name="CHAM_WIDTH"
+-            Value="176"
++            Value="320"
+             Comment="(Chameleon Only) display width"/>
+   <constant Type="int"
+             Name="CHAM_FULLWIDTH"
+-            Value="176"
++            Value="320"
+             Comment="(Chameleon Only) full display width"/>
+   <constant Type="int"
+             Name="CHAM_HEIGHT"
+-            Value="210"
++            Value="240"
+             Comment="(Chameleon Only) display height"/>
+   <constant Type="int"
+             Name="CHAM_FULLHEIGHT"
+-            Value="210"
++            Value="240"
+             Comment="(Chameleon Only) full display height"/>
+   <constant Type="boolean"
+             Name="TRAVERSAL2D"
+@@ -71,19 +71,19 @@
+             Comment="The maximum number of events in the event queue"/>
+   <constant Type="int"
+             Name="FULLWIDTH"
+-            Value="176"
++            Value="320"
+             Comment="(Fixed) full display width"/>
+   <constant Type="int"
+             Name="FULLHEIGHT"
+-            Value="210" 
++            Value="240" 
+             Comment="(Fixed) full display height"/>
+   <constant Type="int"
+             Name="NORMALWIDTH"
+-            Value="176" 
++            Value="320" 
+             Comment="(Fixed) normal width"/>
+   <constant Type="int"
+             Name="NORMALHEIGHT"
+-            Value="210" 
++            Value="240" 
+             Comment="(Fixed) normal height"/>
+   <constant Type="int"
+             Name="VERT_SCROLLBAR_WIDTH"
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_handle_input.c GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_handle_input.c
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_handle_input.c	2007-05-03 03:00:15.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_handle_input.c	2008-03-15 09:35:14.000000000 +0100
+@@ -32,6 +32,7 @@
+ #include <sys/time.h>
+ #include <sys/types.h>
+ #include <unistd.h>
++#include <stdlib.h>
+ 
+ #include <jvm.h>
+ #include <midpServices.h>
+@@ -105,6 +106,7 @@
+  */
+ static void init_key_device() {
+     static int done = 0;
++    char *Value;
+     if (!done) {
+         done = KNI_TRUE;
+         memset(&keyState, 0, sizeof(keyState));
+@@ -114,6 +116,30 @@
+             bitscale_mode = KNI_TRUE;
+             readKeyEvent = read_omap730_key_event;
+             break;
++        case LINUX_FB_GP2X:
++            mapping = GP2X_keys;
++            if ((Value = getenv("J2ME_GP2X_JOYU")) != NULL) mapping[0].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYUL")) != NULL) mapping[1].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYL")) != NULL) mapping[2].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYDL")) != NULL) mapping[3].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYD")) != NULL) mapping[4].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYDR")) != NULL) mapping[5].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYR")) != NULL) mapping[6].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYUR")) != NULL) mapping[7].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_START")) != NULL) mapping[8].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_SELECT")) != NULL) mapping[9].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_LEFT")) != NULL) mapping[10].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_RIGHT")) != NULL) mapping[11].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_BUTA")) != NULL) mapping[12].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_BUTB")) != NULL) mapping[13].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_BUTX")) != NULL) mapping[14].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_BUTY")) != NULL) mapping[15].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_VOLU")) != NULL) mapping[16].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_VOLD")) != NULL) mapping[17].midp_keycode = atoi(Value);
++            if ((Value = getenv("J2ME_GP2X_JOYC")) != NULL) mapping[18].midp_keycode = atoi(Value);
++            bitscale_mode = KNI_TRUE;
++            readKeyEvent = read_GP2X_key_event;
++            break;
+         case LINUX_FB_ZAURUS:
+             mapping = zaurus_sl5500_keys;
+             bitscale_mode = KNI_FALSE;
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.c GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.c
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.c	2007-05-03 03:00:15.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.c	2008-03-15 09:09:02.000000000 +0100
+@@ -173,3 +173,31 @@
+     {KEYMAP_KEY_INVALID,        1024,   0},    /* Left side up button */
+     {KEYMAP_KEY_INVALID,           0,   0},    /* end of table */
+ };
++
++/*
++ * Keypad info for the GP2X
++ * Key press values shall be the values with one and only one bit set
++ * Key release values are not used.
++ */
++KeyMapping GP2X_keys[] = {
++    {KEYMAP_KEY_2,             0x000001,   0},    /* JOY Up        */
++    {KEYMAP_KEY_1,             0x000002,   0},    /* JOY Up-Left   */
++    {KEYMAP_KEY_4,             0x000004,   0},    /* JOY Left      */
++    {KEYMAP_KEY_7,             0x000008,   0},    /* JOY Dn-Left   */
++    {KEYMAP_KEY_8,             0x000010,   0},    /* JOY Down      */
++    {KEYMAP_KEY_9,             0x000020,   0},    /* JOY Dn-Right  */
++    {KEYMAP_KEY_6,             0x000040,   0},    /* JOY Right     */
++    {KEYMAP_KEY_3,             0x000080,   0},    /* JOY Up-Right  */
++    {KEYMAP_MD_KEY_HOME,       0x000100,   0},    /* START Button  */
++    {KEYMAP_KEY_SELECT,        0x000200,   0},    /* SELECT Button */
++    {KEYMAP_KEY_SCREEN_ROT,    0x000400,   0},    /* LEFT Button   */
++    {KEYMAP_MD_KEY_SWITCH_APP, 0x000800,   0},    /* RIGHT Button  */
++    {KEYMAP_KEY_SOFT1,         0x001000,   0},    /* A Button      */
++    {KEYMAP_KEY_SOFT2,         0x002000,   0},    /* B Button      */
++    {KEYMAP_KEY_ASTERISK,      0x004000,   0},    /* X Button      */
++    {KEYMAP_KEY_POUND,         0x008000,   0},    /* Y Button      */
++    {KEYMAP_KEY_0,             0x010000,   0},    /* VOL Up        */
++    {KEYMAP_KEY_CLEAR,         0x020000,   0},    /* VOL Down      */
++    {KEYMAP_KEY_5,             0x040000,   0},    /* JOY Press     */
++    {KEYMAP_KEY_INVALID,              0,   0},    /* end of table  */
++};
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.h GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.h
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.h	2007-05-03 03:00:15.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_keymapping.h	2008-03-09 09:46:26.000000000 +0100
+@@ -58,6 +58,13 @@
+  */
+ extern KeyMapping omap_730_keys[];
+ 
++/**
++ * Keypad info for the GP2X
++ * Key press values shall be the values with one and only one bit set
++ * Key release values are not used.
++ */
++extern KeyMapping GP2X_keys[];
++
+ /** Active key mapping to handle received keyboard signals */
+ extern KeyMapping *mapping;
+ 
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.c GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.c
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.c	2007-05-03 03:00:15.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.c	2008-03-09 10:22:56.000000000 +0100
+@@ -75,6 +75,19 @@
+     return KNI_TRUE;
+ }
+ 
++/** Update input keys state from GP2X keypad device */
++jboolean read_GP2X_key_event() {
++    unsigned long GPIO;
++    if (!keyState.hasPendingKeySignal) {
++        read(fbapp_get_keyboard_fd(), &GPIO, 4);
++        keyState.km = mapping;
++        keyState.changedBits = GPIO ^ keyState.key;
++        keyState.key = GPIO;
++    }
++    keyState.down = -1;
++    return KNI_TRUE;
++}
++
+ /** Update input keys state reading single char from keyboard device */
+ jboolean read_char_key_event() {
+     unsigned char c;
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.h GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.h
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.h	2007-05-03 03:00:15.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/events/input_port/fb/native/fb_read_key.h	2008-03-09 09:37:37.000000000 +0100
+@@ -55,6 +55,12 @@
+ extern jboolean read_omap730_key_event();
+ 
+ /** 
++ * Update input keys state from GP2X keypad device 
++ * @return true if data was read successfully
++ */
++extern jboolean read_GP2X_key_event();
++
++/** 
+  * Update input keys state reading single char from keyboard device
+  * @return true if data was read successfully
+  */
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/include/fbapp_device_type.h GP2X_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/include/fbapp_device_type.h
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/include/fbapp_device_type.h	2007-05-03 03:00:23.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/include/fbapp_device_type.h	2008-03-09 09:29:51.000000000 +0100
+@@ -48,7 +48,8 @@
+     LINUX_FB_VERSATILE_INTEGRATOR,   /* ARM Versatile or Integrator dev board*/
+     LINUX_FB_ZAURUS,                 /* Sharp Zaurus */
+     LINUX_FB_INTEL_MAINSTONE,        /* Intel MainStone dev board */
+-    LINUX_FB_OMAP730                 /* TI-Perseus2 OMAP730 */
++    LINUX_FB_OMAP730,                /* TI-Perseus2 OMAP730 */
++    LINUX_FB_GP2X                    /* GPH GP2X Game Console */
+ } LinuxFbDeviceType ;
+ 
+ #ifdef __cplusplus
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/reference/native/fbapp_export.c GP2X_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/reference/native/fbapp_export.c
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/reference/native/fbapp_export.c	2007-05-03 03:00:23.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/highlevelui/fb_application/reference/native/fbapp_export.c	2008-03-09 09:28:14.000000000 +0100
+@@ -81,7 +81,9 @@
+                 linuxFbDeviceType = LINUX_FB_INTEL_MAINSTONE;
+             } else if (strstr(buff, "TI-Perseus2/OMAP730") != NULL) {
+                 linuxFbDeviceType = LINUX_FB_OMAP730;
+-            } else {
++            } else if (strstr(buff, "MagicEye-MDK") != NULL) {
++                linuxFbDeviceType = LINUX_FB_GP2X;
++            } else { 
+                 /* plug in your device type here */
+             }
+         }
+diff -Naur ORIGINAL_phoneME/phoneme_feature/midp/src/highlevelui/fb_port/fb/native/fb_port.c GP2X_phoneME/phoneme_feature/midp/src/highlevelui/fb_port/fb/native/fb_port.c
+--- ORIGINAL_phoneME/phoneme_feature/midp/src/highlevelui/fb_port/fb/native/fb_port.c	2007-05-03 03:00:22.000000000 +0200
++++ GP2X_phoneME/phoneme_feature/midp/src/highlevelui/fb_port/fb/native/fb_port.c	2008-03-15 19:17:08.000000000 +0100
+@@ -130,6 +130,14 @@
+             fprintf(stderr, "Failed to open %s\n", dev);
+             return;
+         }
++    } else if (linuxFbDeviceType == LINUX_FB_GP2X) {
++        sprintf(dev,"%s", "/dev/GPIO");
++        keyboardFd = open(dev, O_RDONLY | O_NDELAY, 0);
++
++        if (keyboardFd < 0) {
++            fprintf(stderr, "Failed to open %s\n", dev);
++            return;
++        }
+     } else {
+         sprintf(dev,"%s", "/dev/tty0");
+         keyboardFd = open(dev, O_RDWR | O_NDELAY, 0);
